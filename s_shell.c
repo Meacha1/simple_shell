@@ -2,10 +2,10 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
-#include <sys/wait.h>
-#include <sys/types.h>
+#include <stdlib.h>
+
 
 char **tok(char *input)
 {
@@ -22,29 +22,48 @@ char **tok(char *input)
     char **args = malloc((k+2) * sizeof(char*));
     for (i = 0; i < k+1; i++)
     {
-        args[i] = malloc(sizeof(input));
+        args[i] = malloc(strlen(input) + 1);
           for (j = 0; ptr[l+i] != '\0'; j++)
         {
           args[i][j] = ptr[l+i];
           l++;
         }
+	  args[i][j] = '\0';
     }
     args[k+1] = NULL;
     return (args);
 }
-
-int main() {
-char *input = {"ab cde 1 bn amm"};
-char **persed = tok(input);
-
-    return 0;
+int ececute(char **parsed)
+{
+       pid_t pid;
+       if (strcmp(parsed[0], "exit") == 0)
+	       return(1);
+        pid = fork();
+        if (pid == -1)
+                printf("error forking");
+        if (pid == 0)
+        {
+		int val = execvp(parsed[0], parsed);
+        if (val == -1)
+       {
+         printf("error executing\n");
+       }
+	}
+        else
+        {
+                wait(NULL);
+        }
 }
+
 int main()
 {
 	while (1)
 	{
-		char *input = _readline();
+		size_t n = 120;
+		char *input = NULL;
+		getline(&input, &n, stdin);
 		char **parsed = tok(input);
 		ececute(parsed);
-	return (0);
+}
+return (0);
 }
