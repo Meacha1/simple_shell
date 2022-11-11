@@ -5,7 +5,13 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+void _env(char **envp)
+{
+        char **ptr = envp;
+        int i;
+        for (i = 0; ptr[i]; i++)
+                printf("%s\n", ptr[i]);
+}
 char **tok(char *input)
 {
 size_t i,j,k = 0,l = 0;
@@ -31,6 +37,10 @@ int ececute(char **parsed)
        pid_t pid;
        if (strcmp(parsed[0], "exit") == 0)
 	       return (0);
+       if (strcmp(parsed[0], "env") == 0)
+       {
+          _env(parsed);
+       }
         pid = fork();
         if (pid == -1)
                 printf("error forking");

@@ -4,11 +4,10 @@
 
 int main( int argc, char *argv[], char *envp[])
 {
-	printf("TZ = %s\n", getenv("TZ"));
+	printf("env = %s\n", getenv("PATH"));
 	char **ptr = envp;
 	int i;
 	for (i = 0; ptr[i]; i++)
-		if( strcmp("HOME=/root", ptr[i])==0)	
 		printf("%s\n", ptr[i]);
 	return (0);
 }
