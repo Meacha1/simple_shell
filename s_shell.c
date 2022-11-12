@@ -5,6 +5,25 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+int _chdir(const char *path)
+{
+	if (path == NULL)
+	{
+		chdir("/root");
+		return(1);
+	}
+
+        if (chdir(path) == -1)
+        {
+                printf("path not found\n");
+        }
+
+   return (0);
+}
+
 void _env(char **envp)
 {
         char **ptr = envp;
@@ -34,6 +53,12 @@ size_t i,j,k = 0,l = 0;
 }
 int ececute(char **parsed)
 {
+
+       if (strcmp(parsed[0], "cd") == 0)
+       {
+          _chdir(parsed[1]);
+	  return (2);
+       }
        pid_t pid;
        if (strcmp(parsed[0], "exit") == 0)
 	       return (0);
@@ -65,12 +90,16 @@ int main()
 	int success = 1;
 	while (success)
 	{
-		printf("#cisfun#> ");
+		char pwd[100];
+		getcwd(pwd, 100);
+		printf("#cisfun/%s# ", pwd);
 		size_t n = 0;
 		char *input = NULL;
 		getline(&input, &n, stdin);
 		char **parsed = tok(input);
 		success = ececute(parsed);
-}
+		
+		
+	}
 return (0);
 }

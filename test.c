@@ -1,25 +1,32 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
-#include <sys/wait.h>
 
-int main(void)
+size_t _getline (char **string, size_t *n, FILE *stream)
 {
-        pid_t pid;
-        pid_t ppid;
+   int fd;
+   int i = 0;
+   fd = read(0, string[i], *n);
+return (*n);
+}
 
-        pid = fork();
+int main()
+{
+    char *buffer;
+    size_t bufsize = 32;
+    size_t characters;
 
-        if (pid == -1)
-        {
-                printf("unabele to fork\n");
-                return (1);
-        }
-        if (pid == 0)
-        {
-                sleep(1);
-                printf("\n#cisfun$");
-        }
-	else
-      sleep(30);                          
-       return (0);
+    buffer = (char *)malloc(bufsize * sizeof(char));
+    if( buffer == NULL)
+    {
+        perror("Unable to allocate buffer");
+        exit(1);
+    }
+
+    printf("Type something: ");
+    characters = _getline(&buffer,&bufsize,stdin);
+    printf("%zu characters were read.\n",characters);
+    printf("You typed: '%s'\n",buffer);
+
+    return(0);
 }
