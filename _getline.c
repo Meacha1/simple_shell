@@ -5,7 +5,7 @@
 
 size_t _getline(char **string, size_t *n, FILE *stream)
 {
-	int fd, k, j = 0;
+	size_t fd, k, j = 0;
 	char *dup = strdup(*string);
 	*n = 120;
 	while (1)

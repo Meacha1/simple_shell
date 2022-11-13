@@ -33,16 +33,17 @@ void _env(char **envp)
 }
 char **tok(char *input)
 {
-size_t i,j,k = 0,l = 0;
+size_t i,j,k = 0;
     char *ptr = strdup(input);
     char delim[] = " \n";
+    char **args;
     for (j = 0; j < strlen(input); j++)
       if(ptr[j] == ' ')
         {
           ptr[j] = '\0';
           k++;
         }
-    char **args = malloc((k+2) * sizeof(char*));
+    args = malloc((k+2) * sizeof(char*));
      args[0] = strtok(input, delim);
     for (i = 1; i < k+1; i++)
     {
@@ -54,12 +55,12 @@ size_t i,j,k = 0,l = 0;
 int ececute(char **parsed)
 {
 
-       if (strcmp(parsed[0], "cd") == 0)
+       pid_t pid;
+	if (strcmp(parsed[0], "cd") == 0)
        {
           _chdir(parsed[1]);
 	  return (2);
        }
-       pid_t pid;
        if (strcmp(parsed[0], "exit") == 0)
 	       return (0);
        if (strcmp(parsed[0], "env") == 0)
@@ -91,15 +92,14 @@ int main()
 	while (success)
 	{
 		char pwd[100];
+		size_t n = 0;
+		char **parsed;
+		char *input = NULL;
 		getcwd(pwd, 100);
 		printf("#cisfun/%s# ", pwd);
-		size_t n = 0;
-		char *input = NULL;
 		getline(&input, &n, stdin);
-		char **parsed = tok(input);
+		parsed = tok(input);
 		success = ececute(parsed);
-		
-		
 	}
 return (0);
 }
