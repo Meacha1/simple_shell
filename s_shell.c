@@ -5,6 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 
 int _setenv(char *input)
 {
@@ -116,7 +117,10 @@ _chdir(parsed[1]);
 return (2);
 }
 if (strcmp(parsed[0], "exit") == 0)
+{
+if(parsed[1] == NULL)
 return (0);
+}
 if (strcmp(parsed[0], "env") == 0)
 {
 _env(parsed);
@@ -153,6 +157,9 @@ getcwd(pwd, 100);
 printf("#cisfun/%s# ", pwd);
 getline(&input, &n, stdin);
 parsed = tok(input);
+if ((strcmp(parsed[0], "exit") == 0) && atoi(parsed[1]) >= INT_MIN && atoi(parsed[1]) <= INT_MAX)
+                return (atoi(parsed[1]));
+
 success = ececute(parsed);
 }
 return (0);
