@@ -11,7 +11,6 @@ int _setenv(char *input)
 {
 size_t i, j, k = 0, l = 0;
 char *ptr = strdup(input);
-char delim[] = "=";
 char **args;
 for (j = 0; j < strlen(input); j++)
 if (ptr[j] == '=')
@@ -86,11 +85,10 @@ return (args);
 int ececute(char **parsed)
 {
 pid_t pid;
-int i;
 
 if (parsed[1] == NULL && strchr(parsed[0], '=') != NULL)
 {
-i = _setenv(parsed[0]);
+_setenv(parsed[0]);
 return (3);
 }
 else if (parsed[1] != NULL && ((strchr(parsed[0], '=') != NULL) || (strchr(parsed[1], '=') != NULL)))
