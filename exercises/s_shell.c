@@ -209,10 +209,11 @@ int i;
 char **command;
 char **parsed;
 char *input = NULL;
+int num_command;
 getcwd(pwd, 100);
 printf("#cisfun/%s# ", pwd);
 getline(&input, &n, stdin);
-int num_command = count_occurrence(input, ';');
+num_command = count_occurrence(input, ';');
 command = tok_arg(input);
 for (i = 0; i < (num_command+1); i++)
 {
