@@ -13,7 +13,7 @@ char **parsed;
 char *input = NULL;
 int num_command;
 getcwd(pwd, 100);
-printf("#cisfun/%s# ", pwd);
+printf("%s$ ", pwd);
 getline(&input, &n, stdin);
 num_command = count_occurrence(input, ';');
 command = tok_arg(input);
