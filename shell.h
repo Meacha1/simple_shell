@@ -17,6 +17,5 @@ int _chdir(const char *path);
 void _env(char **envp);
 char **tok(char *input);
 int ececute(char **parsed);
-int hsh(void);
 
 #endif
