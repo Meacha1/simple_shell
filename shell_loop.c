@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int _hsh(void)
+int main(void)
 {
 int success = 1;
 while (success)
@@ -20,8 +20,9 @@ command = tok_arg(input);
 for (i = 0; i < (num_command+1); i++)
 {
 parsed = tok(command[i]);
-if ((strcmp(parsed[0], "exit") == 0) && atoi(parsed[1]) >= INT_MIN && atoi(parsed[1]) <= INT_MAX)
+if ((strcmp(parsed[0], "exit") == 0) && parsed[1] != NULL && atoi(parsed[1]) >= INT_MIN && atoi(parsed[1]) <= INT_MAX)
                 return (atoi(parsed[1]));
+else
 success = ececute(parsed);
 }
 }
