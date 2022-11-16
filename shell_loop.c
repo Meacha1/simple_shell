@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int main(void)
+int _hsh(void)
 {
 int success = 1;
 while (success)
